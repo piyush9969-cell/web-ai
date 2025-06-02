@@ -219,7 +219,7 @@ export default function HomePage() {
   }, [data]);
 
   const handleAddEntity = (type: EntityType, entityData: any) => {
-    const id = `${type}-${Date.now()}`
+    const id = `${type}-${type === "person" ? data["people"].length + 1 : data[`${type}s`].length + 1}`;
     const newEntity = { ...entityData, id }
 
     setData((prev) => {
