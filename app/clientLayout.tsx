@@ -56,7 +56,7 @@ export default function ClientLayout({
                         key={item.name}
                         href={item.href}
                         className={`text-sm font-medium transition-colors duration-200 ${isActive
-                          ? "text-red-600 font-semibold"
+                          ? "text-red-600"
                           : "text-gray-700 hover:text-red-500"
                           }`}
                       >
