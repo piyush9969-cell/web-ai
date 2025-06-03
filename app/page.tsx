@@ -70,15 +70,10 @@ const carouselData = [
 ];
 
 
-const navigationItems = [
-  { name: "Home", href: "/" },
-  { name: "Insurance", href: "/insurance" },
-];
 
 export default function LandingPage() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!api) {

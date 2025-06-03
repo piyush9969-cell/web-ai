@@ -10,8 +10,8 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import "./globals.css";
 
 const navigationItems = [
-  { name: "Home", href: "/" },
-  { name: "Organizations", href: "/organisations" },
+  { name: "Overview", href: "/" },
+  { name: "DU01", href: "/du01" },
 ];
 
 export default function ClientLayout({
@@ -56,7 +56,7 @@ export default function ClientLayout({
                   </Link>
                 ))}
                 <Button className="bg-red-600 hover:bg-red-700 text-white">
-                  Get Quote
+                  Sign In
                 </Button>
               </div>
             </div>
@@ -82,7 +82,7 @@ export default function ClientLayout({
                       </Link>
                     ))}
                     <Button className="bg-red-600 hover:bg-red-700 text-white w-full">
-                      Get Quote
+                      Sign In
                     </Button>
                   </div>
                 </SheetContent>

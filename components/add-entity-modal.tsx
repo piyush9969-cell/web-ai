@@ -1,33 +1,57 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import type { EntityType } from "@/app/page"
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import type { EntityType } from "@/app/admin/organisations/page";
 
 interface AddEntityModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onAdd: (type: EntityType, data: any) => void
-  data: any
+  isOpen: boolean;
+  onClose: () => void;
+  onAdd: (type: EntityType, data: any) => void;
+  data: any;
 }
 
-export default function AddEntityModal({ isOpen, onClose, onAdd, data }: AddEntityModalProps) {
-  const [entityType, setEntityType] = useState<EntityType>("organization")
-  const [formData, setFormData] = useState<any>({})
+export default function AddEntityModal({
+  isOpen,
+  onClose,
+  onAdd,
+  data,
+}: AddEntityModalProps) {
+  const [entityType, setEntityType] = useState<EntityType>("organization");
+  const [formData, setFormData] = useState<any>({});
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onAdd(entityType, formData)
-    setFormData({})
-    onClose()
-  }
+    e.preventDefault();
+    onAdd(entityType, formData);
+    setFormData({});
+    setImagePreview(null);
+    onClose();
+  };
+
+  const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const url = e.target.value;
+    setFormData({ ...formData, imageUrl: url });
+    setImagePreview(url || null);
+  };
 
   const renderForm = () => {
     switch (entityType) {
@@ -92,6 +116,32 @@ export default function AddEntityModal({ isOpen, onClose, onAdd, data }: AddEnti
                 }
                 placeholder="e.g., 150"
               />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="imageUrl">Profile Picture URL (Optional)</Label>
+              <div className="flex gap-2 items-center">
+                <Input
+                  id="imageUrl"
+                  value={formData.imageUrl || ""}
+                  onChange={handleImageUrlChange}
+                  placeholder="Leave blank for no image"
+                  className="flex-1"
+                />
+                {imagePreview && (
+                  <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+                    <img
+                      src={imagePreview || "/placeholder.svg"}
+                      alt="Preview"
+                      className="h-full w-full object-cover"
+                      onError={() => setImagePreview(null)}
+                    />
+                  </div>
+                )}
+              </div>
+              <p className="text-xs text-gray-500">
+                Enter a URL to a profile picture or leave blank if no image is
+                needed.
+              </p>
             </div>
           </>
         );
@@ -163,6 +213,32 @@ export default function AddEntityModal({ isOpen, onClose, onAdd, data }: AddEnti
                 placeholder="e.g., User Interface"
               />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="imageUrl">Profile Picture URL (Optional)</Label>
+              <div className="flex gap-2 items-center">
+                <Input
+                  id="imageUrl"
+                  value={formData.imageUrl || ""}
+                  onChange={handleImageUrlChange}
+                  placeholder="Leave blank for no image"
+                  className="flex-1"
+                />
+                {imagePreview && (
+                  <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+                    <img
+                      src={imagePreview || "/placeholder.svg"}
+                      alt="Preview"
+                      className="h-full w-full object-cover"
+                      onError={() => setImagePreview(null)}
+                    />
+                  </div>
+                )}
+              </div>
+              <p className="text-xs text-gray-500">
+                Enter a URL to a profile picture or leave blank if no image is
+                needed.
+              </p>
+            </div>
           </>
         );
 
@@ -230,6 +306,32 @@ export default function AddEntityModal({ isOpen, onClose, onAdd, data }: AddEnti
                 placeholder="e.g., User Research, Interface Design, Prototyping"
               />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="imageUrl">Profile Picture URL (Optional)</Label>
+              <div className="flex gap-2 items-center">
+                <Input
+                  id="imageUrl"
+                  value={formData.imageUrl || ""}
+                  onChange={handleImageUrlChange}
+                  placeholder="Leave blank for no image"
+                  className="flex-1"
+                />
+                {imagePreview && (
+                  <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+                    <img
+                      src={imagePreview || "/placeholder.svg"}
+                      alt="Preview"
+                      className="h-full w-full object-cover"
+                      onError={() => setImagePreview(null)}
+                    />
+                  </div>
+                )}
+              </div>
+              <p className="text-xs text-gray-500">
+                Enter a URL to a profile picture or leave blank if no image is
+                needed.
+              </p>
+            </div>
           </>
         );
 
@@ -296,14 +398,40 @@ export default function AddEntityModal({ isOpen, onClose, onAdd, data }: AddEnti
                 </SelectContent>
               </Select>
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="imageUrl">Profile Picture URL (Optional)</Label>
+              <div className="flex gap-2 items-center">
+                <Input
+                  id="imageUrl"
+                  value={formData.imageUrl || ""}
+                  onChange={handleImageUrlChange}
+                  placeholder="Leave blank for no image"
+                  className="flex-1"
+                />
+                {imagePreview && (
+                  <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+                    <img
+                      src={imagePreview || "/placeholder.svg"}
+                      alt="Preview"
+                      className="h-full w-full object-cover"
+                      onError={() => setImagePreview(null)}
+                    />
+                  </div>
+                )}
+              </div>
+              <p className="text-xs text-gray-500">
+                Enter a URL to a profile picture or leave blank if no image is
+                needed.
+              </p>
+            </div>
           </>
         );
     }
-  }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Add New Entity</DialogTitle>
         </DialogHeader>
@@ -314,8 +442,9 @@ export default function AddEntityModal({ isOpen, onClose, onAdd, data }: AddEnti
             <Select
               value={entityType}
               onValueChange={(value: EntityType) => {
-                setEntityType(value)
-                setFormData({})
+                setEntityType(value);
+                setFormData({});
+                setImagePreview(null);
               }}
             >
               <SelectTrigger>
@@ -341,5 +470,5 @@ export default function AddEntityModal({ isOpen, onClose, onAdd, data }: AddEnti
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

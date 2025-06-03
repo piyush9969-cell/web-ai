@@ -1,58 +1,83 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import type { EntityType } from "@/app/page"
+import { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import type { EntityType } from "@/app/admin/organisations/page";
 
 interface EditEntityModalProps {
-  isOpen: boolean
-  onClose: () => void
-  onEdit: (type: EntityType, data: any) => void
-  entityType: EntityType
-  entity: any
-  data: any
+  isOpen: boolean;
+  onClose: () => void;
+  onEdit: (type: EntityType, data: any) => void;
+  entityType: EntityType;
+  entity: any;
+  data: any;
 }
 
-export default function EditEntityModal({ isOpen, onClose, onEdit, entityType, entity, data }: EditEntityModalProps) {
-  const [formData, setFormData] = useState<any>({})
-console.log("Submitting Form Data:", formData);
+export default function EditEntityModal({
+  isOpen,
+  onClose,
+  onEdit,
+  entityType,
+  entity,
+  data,
+}: EditEntityModalProps) {
+  const [formData, setFormData] = useState<any>({});
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   useEffect(() => {
     if (entity) {
-      setFormData({ ...entity })
+      setFormData({ ...entity });
+      setImagePreview(entity.imageUrl || null);
     }
-  }, [entity])
+  }, [entity]);
 
-useEffect(() => {
-  if (!entity) return;
+  useEffect(() => {
+    if (!entity) return;
 
-  // Common fields
-  const newFormData: any = { ...entity };
+    // Common fields
+    const newFormData: any = { ...entity };
 
-  // Only handle responsibilitiesRaw if this is a "circle"
-  if (entityType === "circle") {
-    //Converts array -> string
-    newFormData.responsibilitiesRaw = Array.isArray(entity.responsibilities)
-      ? entity.responsibilities.join(", ")
-      : entity.responsibilities || "";
-  }
+    // Only handle responsibilitiesRaw if this is a "circle"
+    if (entityType === "circle") {
+      //Converts array -> string
+      newFormData.responsibilitiesRaw = Array.isArray(entity.responsibilities)
+        ? entity.responsibilities.join(", ")
+        : entity.responsibilities || "";
+    }
 
-  setFormData(newFormData);
-}, [entity, entityType]);
-
+    setFormData(newFormData);
+    setImagePreview(entity.imageUrl || null);
+  }, [entity, entityType]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onEdit(entityType, formData)
-    onClose()
-  }
+    e.preventDefault();
+    onEdit(entityType, formData);
+    onClose();
+  };
+
+  const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const url = e.target.value;
+    setFormData({ ...formData, imageUrl: url });
+    setImagePreview(url || null);
+  };
 
   const renderForm = () => {
     switch (entityType) {
@@ -64,7 +89,9 @@ useEffect(() => {
               <Input
                 id="name"
                 value={formData.name || ""}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
               />
             </div>
             <div className="space-y-2">
@@ -72,7 +99,9 @@ useEffect(() => {
               <Textarea
                 id="description"
                 value={formData.description || ""}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
               />
             </div>
             <div className="space-y-2">
@@ -80,7 +109,9 @@ useEffect(() => {
               <Input
                 id="location"
                 value={formData.location || ""}
-                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, location: e.target.value })
+                }
               />
             </div>
             <div className="space-y-2">
@@ -88,7 +119,9 @@ useEffect(() => {
               <Input
                 id="established"
                 value={formData.established || ""}
-                onChange={(e) => setFormData({ ...formData, established: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, established: e.target.value })
+                }
               />
             </div>
             <div className="space-y-2">
@@ -97,11 +130,42 @@ useEffect(() => {
                 id="employees"
                 type="number"
                 value={formData.employees || ""}
-                onChange={(e) => setFormData({ ...formData, employees: Number.parseInt(e.target.value) || 0 })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    employees: Number.parseInt(e.target.value) || 0,
+                  })
+                }
               />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="imageUrl">Profile Picture URL (Optional)</Label>
+              <div className="flex gap-2 items-center">
+                <Input
+                  id="imageUrl"
+                  value={formData.imageUrl || ""}
+                  onChange={handleImageUrlChange}
+                  placeholder="Leave blank for no image"
+                  className="flex-1"
+                />
+                {imagePreview && (
+                  <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+                    <img
+                      src={imagePreview || "/placeholder.svg"}
+                      alt="Preview"
+                      className="h-full w-full object-cover"
+                      onError={() => setImagePreview(null)}
+                    />
+                  </div>
+                )}
+              </div>
+              <p className="text-xs text-gray-500">
+                Enter a URL to a profile picture or leave blank if no image is
+                needed.
+              </p>
+            </div>
           </>
-        )
+        );
 
       case "team":
         return (
@@ -110,7 +174,9 @@ useEffect(() => {
               <Label htmlFor="organizationId">Organization</Label>
               <Select
                 value={formData.organizationId || ""}
-                onValueChange={(value) => setFormData({ ...formData, organizationId: value })}
+                onValueChange={(value) =>
+                  setFormData({ ...formData, organizationId: value })
+                }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select organization" />
@@ -129,7 +195,9 @@ useEffect(() => {
               <Input
                 id="name"
                 value={formData.name || ""}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
               />
             </div>
             <div className="space-y-2">
@@ -137,7 +205,9 @@ useEffect(() => {
               <Textarea
                 id="description"
                 value={formData.description || ""}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
               />
             </div>
             <div className="space-y-2">
@@ -145,7 +215,9 @@ useEffect(() => {
               <Input
                 id="lead"
                 value={formData.lead || ""}
-                onChange={(e) => setFormData({ ...formData, lead: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, lead: e.target.value })
+                }
               />
             </div>
             <div className="space-y-2">
@@ -153,11 +225,39 @@ useEffect(() => {
               <Input
                 id="focus"
                 value={formData.focus || ""}
-                onChange={(e) => setFormData({ ...formData, focus: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, focus: e.target.value })
+                }
               />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="imageUrl">Profile Picture URL (Optional)</Label>
+              <div className="flex gap-2 items-center">
+                <Input
+                  id="imageUrl"
+                  value={formData.imageUrl || ""}
+                  onChange={handleImageUrlChange}
+                  placeholder="Leave blank for no image"
+                  className="flex-1"
+                />
+                {imagePreview && (
+                  <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+                    <img
+                      src={imagePreview || "/placeholder.svg"}
+                      alt="Preview"
+                      className="h-full w-full object-cover"
+                      onError={() => setImagePreview(null)}
+                    />
+                  </div>
+                )}
+              </div>
+              <p className="text-xs text-gray-500">
+                Enter a URL to a profile picture or leave blank if no image is
+                needed.
+              </p>
+            </div>
           </>
-        )
+        );
 
       case "circle":
         return (
@@ -208,7 +308,6 @@ useEffect(() => {
               </Label>
               <Textarea
                 id="responsibilities"
-                
                 value={formData.responsibilitiesRaw || ""}
                 onChange={(e) => {
                   const rawValue = e.target.value;
@@ -224,6 +323,32 @@ useEffect(() => {
                 }}
               />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="imageUrl">Profile Picture URL (Optional)</Label>
+              <div className="flex gap-2 items-center">
+                <Input
+                  id="imageUrl"
+                  value={formData.imageUrl || ""}
+                  onChange={handleImageUrlChange}
+                  placeholder="Leave blank for no image"
+                  className="flex-1"
+                />
+                {imagePreview && (
+                  <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+                    <img
+                      src={imagePreview || "/placeholder.svg"}
+                      alt="Preview"
+                      className="h-full w-full object-cover"
+                      onError={() => setImagePreview(null)}
+                    />
+                  </div>
+                )}
+              </div>
+              <p className="text-xs text-gray-500">
+                Enter a URL to a profile picture or leave blank if no image is
+                needed.
+              </p>
+            </div>
           </>
         );
 
@@ -234,7 +359,9 @@ useEffect(() => {
               <Label htmlFor="circleId">Circle</Label>
               <Select
                 value={formData.circleId || ""}
-                onValueChange={(value) => setFormData({ ...formData, circleId: value })}
+                onValueChange={(value) =>
+                  setFormData({ ...formData, circleId: value })
+                }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select circle" />
@@ -253,7 +380,9 @@ useEffect(() => {
               <Input
                 id="name"
                 value={formData.name || ""}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
               />
             </div>
             <div className="space-y-2">
@@ -261,7 +390,9 @@ useEffect(() => {
               <Input
                 id="role"
                 value={formData.role || ""}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, role: e.target.value })
+                }
               />
             </div>
             <div className="space-y-2">
@@ -270,7 +401,9 @@ useEffect(() => {
                 id="email"
                 type="email"
                 value={formData.email || ""}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
               />
             </div>
             <div className="space-y-2">
@@ -278,17 +411,45 @@ useEffect(() => {
               <Input
                 id="department"
                 value={formData.department || ""}
-                onChange={(e) => setFormData({ ...formData, department: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, department: e.target.value })
+                }
               />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="imageUrl">Profile Picture URL (Optional)</Label>
+              <div className="flex gap-2 items-center">
+                <Input
+                  id="imageUrl"
+                  value={formData.imageUrl || ""}
+                  onChange={handleImageUrlChange}
+                  placeholder="Leave blank for no image"
+                  className="flex-1"
+                />
+                {imagePreview && (
+                  <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+                    <img
+                      src={imagePreview || "/placeholder.svg"}
+                      alt="Preview"
+                      className="h-full w-full object-cover"
+                      onError={() => setImagePreview(null)}
+                    />
+                  </div>
+                )}
+              </div>
+              <p className="text-xs text-gray-500">
+                Enter a URL to a profile picture or leave blank if no image is
+                needed.
+              </p>
+            </div>
           </>
-        )
+        );
     }
-  }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit {entityType}</DialogTitle>
         </DialogHeader>
@@ -305,5 +466,5 @@ useEffect(() => {
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

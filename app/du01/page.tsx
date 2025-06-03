@@ -1,49 +1,54 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Plus, Users, Building, Target, User } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import OrganizationChart from "@/components/organization-chart"
-import AddEntityModal from "@/components/add-entity-modal"
-import EditEntityModal from "@/components/edit-entity-modal"
+import { useEffect, useState } from "react";
+import { Plus, Users, Building, Target, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import OrganizationChart from "@/components/organization-chart";
+import AddEntityModal from "@/components/add-entity-modal";
+import EditEntityModal from "@/components/edit-entity-modal";
+import AdminOrganizationChart from "@/components/admin-organization-chart";
 
 export interface Person {
-  id: string
-  name: string
-  role: string
-  email: string
-  department: string
-  circleId: string
+  id: string;
+  name: string;
+  role: string;
+  email: string;
+  department: string;
+  circleId: string;
+  imageUrl: string;
 }
 
 export interface Circle {
-  id: string
-  name: string
-  purpose: string
-  responsibilities: string[]
-  teamId: string
+  id: string;
+  name: string;
+  purpose: string;
+  responsibilities: string[];
+  teamId: string;
+  imageUrl: string;
 }
 
 export interface Team {
-  id: string
-  name: string
-  description: string
-  lead: string
-  focus: string
-  organizationId: string
+  id: string;
+  name: string;
+  description: string;
+  lead: string;
+  focus: string;
+  organizationId: string;
+  imageUrl: string;
 }
 
 export interface Organization {
-  id: string
-  name: string
-  description: string
-  location: string
-  established: string
-  employees: number
+  id: string;
+  name: string;
+  description: string;
+  location: string;
+  established: string;
+  employees: number;
+  imageUrl: string;
 }
 
-export type EntityType = "organization" | "team" | "circle" | "person"
+export type EntityType = "organization" | "team" | "circle" | "person";
 
 const exampleData = [
   { id: "org1", name: "Org A", type: "organization" },
@@ -54,10 +59,7 @@ const exampleData = [
   { id: "person1", name: "Jane Doe", type: "person", parentId: "circle1" },
   { id: "person2", name: "John Smith", type: "person", parentId: "circle2" },
   { id: "person3", name: "Alice Johnson", type: "person", parentId: "circle1" },
-  
-
 ];
-
 
 const initialData = {
   organizations: [
@@ -126,7 +128,11 @@ const initialData = {
       name: "Jitender Kapoor (AD)",
       purpose:
         "Supporting client's complete end-to-end application development and maintenance activities",
-      responsibilities: ["Frontend Development", "User Experience Design", "Accessibility Compliance"],
+      responsibilities: [
+        "Frontend Development",
+        "User Experience Design",
+        "Accessibility Compliance",
+      ],
       teamId: "team-1",
     },
     {
@@ -134,7 +140,11 @@ const initialData = {
       name: "Rajesh Karanmsetty (SM)",
       purpose:
         "Trusted partner in handling and managing Guidewire business activites",
-      responsibilities: ["Guidewire Integration", "API Management", "Data Migration"],
+      responsibilities: [
+        "Guidewire Integration",
+        "API Management",
+        "Data Migration",
+      ],
       teamId: "team-2",
     },
     {
@@ -142,7 +152,11 @@ const initialData = {
       name: "Ranjit (MD)",
       purpose:
         "Trusted partner in handling and managing Guidewire business activites",
-      responsibilities: ["Guidewire Integration", "API Management", "Data Migration"],
+      responsibilities: [
+        "Guidewire Integration",
+        "API Management",
+        "Data Migration",
+      ],
       teamId: "team-3",
     },
     {
@@ -150,7 +164,11 @@ const initialData = {
       name: "Sridhar Murugrajan(AD)",
       purpose:
         "Trusted partner in handling and managing Guidewire business activites",
-      responsibilities: ["Guidewire Integration", "API Management", "Data Migration"],
+      responsibilities: [
+        "Guidewire Integration",
+        "API Management",
+        "Data Migration",
+      ],
       teamId: "team-4",
     },
     {
@@ -164,7 +182,11 @@ const initialData = {
       id: "circle-6",
       name: "Sumit Bose",
       purpose: "Project management and coordination",
-      responsibilities: ["Project Planning", "Resource Allocation", "Risk Management"],
+      responsibilities: [
+        "Project Planning",
+        "Resource Allocation",
+        "Risk Management",
+      ],
       teamId: "team-6",
     },
   ],
@@ -205,25 +227,28 @@ const initialData = {
 };
 
 export default function HomePage() {
-  const [data, setData] = useState(initialData)
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [data, setData] = useState(initialData);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingEntity, setEditingEntity] = useState<{
-    type: EntityType
-    entity: any
-  } | null>(null)
+    type: EntityType;
+    entity: any;
+  } | null>(null);
 
-  console.log(data)
+  console.log(data);
   useEffect(() => {
     console.log("Updated Data in HomePage:", data);
   }, [data]);
 
   const handleAddEntity = (type: EntityType, entityData: any) => {
-    const id = `${type}-${type === "person" ? data["people"].length + 1 : data[`${type}s`].length + 1}`;
-    const newEntity = { ...entityData, id }
+    const id = `${type}-${
+      type === "person"
+        ? data["people"].length + 1
+        : data[`${type}s`].length + 1
+    }`;
+    const newEntity = { ...entityData, id };
 
     setData((prev) => {
-      
       const pluralType =
         type === "person" ? "people" : (`${type}s` as keyof typeof prev);
       const currentArray = (prev[pluralType] as any[]) || [];
@@ -231,94 +256,18 @@ export default function HomePage() {
       return {
         ...prev,
         [pluralType]: [...currentArray, newEntity],
-      }
-    })
-  }
+      };
+    });
+  };
 
-const handleEditEntity = (type: EntityType, entityData: any) => {
-  console.log("Editing Entity:", type, entityData); // Debugging
-  setData((prev) => {
-   
-    const pluralType =
-      type === "person" ? "people" : (`${type}s` as keyof typeof prev);
-    const currentArray = (prev[pluralType] as any[]) || [];
-
-    return {
-      ...prev,
-      [pluralType]: currentArray.map((item) =>
-        item.id === entityData.id ? entityData : item
-      ),
-    };
-  });
-};
-
-//   entityId: string,
-//   newParentId: string,
-//   entityType: EntityType
-// ) => {
-//   console.log("yooo")
-//   if (entityType === "person") {
-//     console.log(
-//       `Moving person with ID: ${entityId} to circle with ID: ${newParentId}`
-//     );
-//     setData((prev) => ({
-//       ...prev,
-//       people: prev.people.map((person) =>
-//         person.id === entityId ? { ...person, circleId: newParentId } : person
-//       ),
-//     }));
-//   } else if (entityType === "circle") {
-//     console.log(
-//       `Moving circle with ID: ${entityId} to team with ID: ${newParentId}`
-//     );
-//     setData((prev) => ({
-//       ...prev,
-//       circles: prev.circles.map((circle) =>
-//         circle.id === entityId ? { ...circle, teamId: newParentId } : circle
-//       ),
-//     }));
-//   } else if (entityType === "team") {
-//     console.log(
-//       `Moving team with ID: ${entityId} to organization with ID: ${newParentId}`
-//     );
-//     setData((prev) => ({
-//       ...prev,
-//       teams: prev.teams.map((team) =>
-//         team.id === entityId ? { ...team, organizationId: newParentId } : team
-//       ),
-//     }));
-//   }
-// };
 
   const openEditModal = (type: EntityType, entity: any) => {
-    setEditingEntity({ type, entity })
-    setIsEditModalOpen(true)
-  }
+    setEditingEntity({ type, entity });
+    setIsEditModalOpen(true);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                Organization Chart
-              </h1>
-              <p className="text-gray-600 mt-1">
-                Visualize and manage your organizational structure
-              </p>
-            </div>
-            <Button
-              onClick={() => setIsAddModalOpen(true)}
-              className="border border-red-600 text-red-600 bg-white hover:bg-red-600 hover:text-white transition-colors duration-200"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              <span>Add Entity</span>
-            </Button>
-          </div>
-        </div>
-      </header>
 
       {/* Stats Overview */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -365,7 +314,7 @@ const handleEditEntity = (type: EntityType, entityData: any) => {
           </Card>
         </div>
         <Card className="relative overflow-auto w-full">
-          <OrganizationChart data={data} onEditEntity={openEditModal} />
+          <AdminOrganizationChart data={data} />
         </Card>
       </div>
 
