@@ -213,10 +213,7 @@ export default function HomePage() {
     entity: any
   } | null>(null)
 
-  console.log(data)
-  useEffect(() => {
-    console.log("Updated Data in HomePage:", data);
-  }, [data]);
+
 
   const handleAddEntity = (type: EntityType, entityData: any) => {
     const id = `${type}-${type === "person" ? data["people"].length + 1 : data[`${type}s`].length + 1}`;
@@ -236,7 +233,7 @@ export default function HomePage() {
   }
 
 const handleEditEntity = (type: EntityType, entityData: any) => {
-  console.log("Editing Entity:", type, entityData); // Debugging
+
   setData((prev) => {
    
     const pluralType =

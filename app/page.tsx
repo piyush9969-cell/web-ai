@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Menu, Shield, Home, Building, Heart,Star,Users,Briefcase,Code } from "lucide-react";
+import { Menu, Shield, Home, Building, Heart, Star, Users, Briefcase, Code } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -152,7 +152,7 @@ export default function LandingPage() {
 
                           {/* Image */}
                           <div className="relative">
-                            <div className="aspect-[4/3] rounded-3xl overflow-hidden bg-gray-100">
+                            <div className="aspect-[4/3] rounded-3xl overflow-hidden bg-gray-100 relative">
                               <Image
                                 src={slide.image || "/placeholder.svg"}
                                 alt={slide.title}
@@ -169,8 +169,8 @@ export default function LandingPage() {
               </CarouselContent>
 
               {/* Navigation Buttons */}
-              <CarouselPrevious className="absolute top-1/2 -translate-y-1/2 bg-white border-gray-200 text-red-700 hover:bg-red-500 hover:text-white shadow-lg" />
-              <CarouselNext className="absolute top-1/2 -translate-y-1/2 bg-white border-gray-200 text-red-700 hover:bg-red-500 hover:text-white shadow-lg" />
+              {/* <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white border-gray-200 text-red-700 hover:bg-red-500 hover:text-white shadow-lg ml-2" />
+              <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white border-gray-200 text-red-700 hover:bg-red-500 hover:text-white shadow-lg mr-2" /> */}
             </Carousel>
 
             {/* Carousel Indicators */}
@@ -178,11 +178,10 @@ export default function LandingPage() {
               {carouselData.map((_, index) => (
                 <button
                   key={index}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === current
-                      ? "bg-red-600 w-8"
-                      : "bg-gray-300 hover:bg-gray-400"
-                  }`}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${index === current
+                    ? "bg-red-600 w-8"
+                    : "bg-gray-300 hover:bg-gray-400"
+                    }`}
                   onClick={() => api?.scrollTo(index)}
                 />
               ))}
