@@ -11,7 +11,7 @@ import "./globals.css";
 
 const navigationItems = [
   { name: "Overview", href: "/" },
-  { name: "DU01", href: "/du01" },
+  { name: "DU's in Insurance", href: "/du01" },
 ];
 
 export default function ClientLayout({
