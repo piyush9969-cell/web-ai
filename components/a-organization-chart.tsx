@@ -180,8 +180,7 @@ const generateMermaidDefinition = (data: OrganizationChartProps["data"]) => {
       classDef team fill:#F9FAFB,stroke:#374151,stroke-width:2px,color:#1F2937,cursor:pointer,rx:10,ry:10,font-weight:500
       classDef circle fill:#F3F4F6,stroke:#6B7280,stroke-width:2px,color:#374151,cursor:pointer,rx:10,ry:10,font-weight:500
       classDef person fill:#FFFFFF,stroke:#9CA3AF,stroke-width:2px,color:#4B5563,cursor:pointer,rx:8,ry:8,font-weight:400
-    `
-  }
+    `}
 
   const setupInteractivity = () => {
     if (!containerRef.current) return
