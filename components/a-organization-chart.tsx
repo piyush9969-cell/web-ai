@@ -28,7 +28,7 @@ export default function AOrganizationChart({ data, onEditEntity }: OrganizationC
     "https://th.bing.com/th/id/OIP.2S1xLtta6ORdxtlYpiACIgAAAA?rs=1&pid=ImgDetMain";
 
    const DEFAULT_TEAMS_IMAGE_URL =
-     "https://static.vecteezy.com/system/resources/thumbnails/006/298/276/small/gear-smart-eps-icon-digital-tech-business-logo-free-vector.jpg"; 
+    "https://th.bing.com/th/id/OIP.eqy73cLLcfiNATQTolZSqwHaHa?rs=1&pid=ImgDetMain";
   const DEFAULT_PEOPLE_IMAGE_URL =
     "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png";
 
