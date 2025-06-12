@@ -32,10 +32,14 @@ export default function OrganizationChart({
     
   const DEFAULT_ORG_IMAGE_URL =
     "https://th.bing.com/th/id/OIP.MUVTf7Rn2k0E0W4yO__A6wHaHa?r=0&rs=1&pid=ImgDetMain";
-  const DEFAULT_TEAM_IMAGE_URL =
+  const DEFAULT_CIRCLES_IMAGE_URL =
     "https://th.bing.com/th/id/OIP.2S1xLtta6ORdxtlYpiACIgAAAA?rs=1&pid=ImgDetMain";
+
+  const DEFAULT_TEAMS_IMAGE_URL =
+    "https://static.vecteezy.com/system/resources/thumbnails/006/298/276/small/gear-smart-eps-icon-digital-tech-business-logo-free-vector.jpg";
   const DEFAULT_PEOPLE_IMAGE_URL =
     "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png";
+
 
   useEffect(() => {
     initializeMermaid();
@@ -107,7 +111,7 @@ export default function OrganizationChart({
         const lead = sanitizeText(team.lead);
         const imageHtml = team.imageUrl
           ? `<img src='${team.imageUrl}' ${profilePicStyle} />`
-          : `<img src='${DEFAULT_TEAM_IMAGE_URL}' ${profilePicStyle} />`;
+          : `<img src='${DEFAULT_TEAMS_IMAGE_URL}' ${profilePicStyle} />`;
         const teamSubtitle = lead
           ? `<br/><small style='color: #666;'>Lead: ${lead}</small>`
           : "";
@@ -122,7 +126,7 @@ export default function OrganizationChart({
           const purpose = sanitizeText(circle.purpose, 50); // Truncate purpose
           const imageHtml = circle.imageUrl
             ? `<img src='${circle.imageUrl}' ${profilePicStyle} />`
-            : `<img src='${DEFAULT_TEAM_IMAGE_URL}' ${profilePicStyle} />`;
+            : `<img src='${DEFAULT_CIRCLES_IMAGE_URL}' ${profilePicStyle} />`;
           const circleSubtitle = purpose
             ? `<br/><small style='color: #666;'>${purpose}</small>`
             : "";
