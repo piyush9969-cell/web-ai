@@ -8,6 +8,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,7 +21,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { EntityType } from "@/app/admin/organisations/page";
+import ImageField from "./image-field";
+import type {
+  EntityType,
+  Organization,
+  Team,
+  Circle,
+  Person,
+} from "@/app/admin/organisations/page";
 
 interface EditEntityModalProps {
   isOpen: boolean;
@@ -28,7 +36,12 @@ interface EditEntityModalProps {
   onEdit: (type: EntityType, data: any) => void;
   entityType: EntityType;
   entity: any;
-  data: any;
+  data: {
+    organizations: Organization[];
+    teams: Team[];
+    circles: Circle[];
+    people: Person[];
+  };
 }
 
 export default function EditEntityModal({
@@ -40,31 +53,25 @@ export default function EditEntityModal({
   data,
 }: EditEntityModalProps) {
   const [formData, setFormData] = useState<any>({});
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   useEffect(() => {
     if (entity) {
       setFormData({ ...entity });
-      setImagePreview(entity.imageUrl || null);
     }
   }, [entity]);
 
   useEffect(() => {
     if (!entity) return;
 
-    // Common fields
     const newFormData: any = { ...entity };
 
-    // Only handle responsibilitiesRaw if this is a "circle"
     if (entityType === "circle") {
-      //Converts array -> string
       newFormData.responsibilitiesRaw = Array.isArray(entity.responsibilities)
         ? entity.responsibilities.join(", ")
         : entity.responsibilities || "";
     }
 
     setFormData(newFormData);
-    setImagePreview(entity.imageUrl || null);
   }, [entity, entityType]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -73,13 +80,14 @@ export default function EditEntityModal({
     onClose();
   };
 
-  const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const url = e.target.value;
-    setFormData({ ...formData, imageUrl: url });
-    setImagePreview(url || null);
+  const handleInputChange = (
+    field: string,
+    value: string | string[] | number
+  ) => {
+    setFormData((prev: any) => ({ ...prev, [field]: value }));
   };
 
-  const renderForm = () => {
+  const renderFormFields = () => {
     switch (entityType) {
       case "organization":
         return (
@@ -89,9 +97,8 @@ export default function EditEntityModal({
               <Input
                 id="name"
                 value={formData.name || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
+                onChange={(e) => handleInputChange("name", e.target.value)}
+                required
               />
             </div>
             <div className="space-y-2">
@@ -100,7 +107,7 @@ export default function EditEntityModal({
                 id="description"
                 value={formData.description || ""}
                 onChange={(e) =>
-                  setFormData({ ...formData, description: e.target.value })
+                  handleInputChange("description", e.target.value)
                 }
               />
             </div>
@@ -109,18 +116,17 @@ export default function EditEntityModal({
               <Input
                 id="location"
                 value={formData.location || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, location: e.target.value })
-                }
+                onChange={(e) => handleInputChange("location", e.target.value)}
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="established">Established</Label>
               <Input
                 id="established"
+                type="date"
                 value={formData.established || ""}
                 onChange={(e) =>
-                  setFormData({ ...formData, established: e.target.value })
+                  handleInputChange("established", e.target.value)
                 }
               />
             </div>
@@ -131,39 +137,21 @@ export default function EditEntityModal({
                 type="number"
                 value={formData.employees || ""}
                 onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    employees: Number.parseInt(e.target.value) || 0,
-                  })
+                  handleInputChange(
+                    "employees",
+                    Number.parseInt(e.target.value) || 0
+                  )
                 }
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="imageUrl">Profile Picture URL (Optional)</Label>
-              <div className="flex gap-2 items-center">
-                <Input
-                  id="imageUrl"
-                  value={formData.imageUrl || ""}
-                  onChange={handleImageUrlChange}
-                  placeholder="Leave blank for no image"
-                  className="flex-1"
-                />
-                {imagePreview && (
-                  <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
-                    <img
-                      src={imagePreview || "/placeholder.svg"}
-                      alt="Preview"
-                      className="h-full w-full object-cover"
-                      onError={() => setImagePreview(null)}
-                    />
-                  </div>
-                )}
-              </div>
-              <p className="text-xs text-gray-500">
-                Enter a URL to a profile picture or leave blank if no image is
-                needed.
-              </p>
-            </div>
+            <ImageField
+              label="Organization Image"
+              value={formData.imageUrl || ""}
+              onChange={(value) =>
+                setFormData({ ...formData, imageUrl: value })
+              }
+              aspectRatio={16 / 9}
+            />
           </>
         );
 
@@ -175,14 +163,14 @@ export default function EditEntityModal({
               <Select
                 value={formData.organizationId || ""}
                 onValueChange={(value) =>
-                  setFormData({ ...formData, organizationId: value })
+                  handleInputChange("organizationId", value)
                 }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select organization" />
                 </SelectTrigger>
                 <SelectContent>
-                  {data.organizations.map((org: any) => (
+                  {data.organizations.map((org) => (
                     <SelectItem key={org.id} value={org.id}>
                       {org.name}
                     </SelectItem>
@@ -195,9 +183,8 @@ export default function EditEntityModal({
               <Input
                 id="name"
                 value={formData.name || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
+                onChange={(e) => handleInputChange("name", e.target.value)}
+                required
               />
             </div>
             <div className="space-y-2">
@@ -206,7 +193,7 @@ export default function EditEntityModal({
                 id="description"
                 value={formData.description || ""}
                 onChange={(e) =>
-                  setFormData({ ...formData, description: e.target.value })
+                  handleInputChange("description", e.target.value)
                 }
               />
             </div>
@@ -215,9 +202,7 @@ export default function EditEntityModal({
               <Input
                 id="lead"
                 value={formData.lead || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, lead: e.target.value })
-                }
+                onChange={(e) => handleInputChange("lead", e.target.value)}
               />
             </div>
             <div className="space-y-2">
@@ -225,37 +210,17 @@ export default function EditEntityModal({
               <Input
                 id="focus"
                 value={formData.focus || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, focus: e.target.value })
-                }
+                onChange={(e) => handleInputChange("focus", e.target.value)}
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="imageUrl">Profile Picture URL (Optional)</Label>
-              <div className="flex gap-2 items-center">
-                <Input
-                  id="imageUrl"
-                  value={formData.imageUrl || ""}
-                  onChange={handleImageUrlChange}
-                  placeholder="Leave blank for no image"
-                  className="flex-1"
-                />
-                {imagePreview && (
-                  <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
-                    <img
-                      src={imagePreview || "/placeholder.svg"}
-                      alt="Preview"
-                      className="h-full w-full object-cover"
-                      onError={() => setImagePreview(null)}
-                    />
-                  </div>
-                )}
-              </div>
-              <p className="text-xs text-gray-500">
-                Enter a URL to a profile picture or leave blank if no image is
-                needed.
-              </p>
-            </div>
+            <ImageField
+              label="Team Image"
+              value={formData.imageUrl || ""}
+              onChange={(value) =>
+                setFormData({ ...formData, imageUrl: value })
+              }
+              aspectRatio={1}
+            />
           </>
         );
 
@@ -266,15 +231,13 @@ export default function EditEntityModal({
               <Label htmlFor="teamId">Team</Label>
               <Select
                 value={formData.teamId || ""}
-                onValueChange={(value) =>
-                  setFormData({ ...formData, teamId: value })
-                }
+                onValueChange={(value) => handleInputChange("teamId", value)}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select team" />
                 </SelectTrigger>
                 <SelectContent>
-                  {data.teams.map((team: any) => (
+                  {data.teams.map((team) => (
                     <SelectItem key={team.id} value={team.id}>
                       {team.name}
                     </SelectItem>
@@ -287,9 +250,8 @@ export default function EditEntityModal({
               <Input
                 id="name"
                 value={formData.name || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
+                onChange={(e) => handleInputChange("name", e.target.value)}
+                required
               />
             </div>
             <div className="space-y-2">
@@ -297,9 +259,7 @@ export default function EditEntityModal({
               <Textarea
                 id="purpose"
                 value={formData.purpose || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, purpose: e.target.value })
-                }
+                onChange={(e) => handleInputChange("purpose", e.target.value)}
               />
             </div>
             <div className="space-y-2">
@@ -308,47 +268,27 @@ export default function EditEntityModal({
               </Label>
               <Textarea
                 id="responsibilities"
-                value={formData.responsibilitiesRaw || ""}
-                onChange={(e) => {
-                  const rawValue = e.target.value;
-                  // Converts string ➝ array (when editing data)
-                  setFormData({
-                    ...formData,
-                    responsibilitiesRaw: rawValue,
-                    responsibilities: rawValue
-                      .split(",")
-                      .map((r) => r.trim())
-                      .filter(Boolean),
-                  });
-                }}
+                value={
+                  Array.isArray(formData.responsibilities)
+                    ? formData.responsibilities.join(", ")
+                    : ""
+                }
+                onChange={(e) =>
+                  handleInputChange(
+                    "responsibilities",
+                    e.target.value.split(", ").filter(Boolean)
+                  )
+                }
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="imageUrl">Profile Picture URL (Optional)</Label>
-              <div className="flex gap-2 items-center">
-                <Input
-                  id="imageUrl"
-                  value={formData.imageUrl || ""}
-                  onChange={handleImageUrlChange}
-                  placeholder="Leave blank for no image"
-                  className="flex-1"
-                />
-                {imagePreview && (
-                  <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
-                    <img
-                      src={imagePreview || "/placeholder.svg"}
-                      alt="Preview"
-                      className="h-full w-full object-cover"
-                      onError={() => setImagePreview(null)}
-                    />
-                  </div>
-                )}
-              </div>
-              <p className="text-xs text-gray-500">
-                Enter a URL to a profile picture or leave blank if no image is
-                needed.
-              </p>
-            </div>
+            <ImageField
+              label="Circle Image"
+              value={formData.imageUrl || ""}
+              onChange={(value) =>
+                setFormData({ ...formData, imageUrl: value })
+              }
+              aspectRatio={1}
+            />
           </>
         );
 
@@ -359,15 +299,13 @@ export default function EditEntityModal({
               <Label htmlFor="circleId">Circle</Label>
               <Select
                 value={formData.circleId || ""}
-                onValueChange={(value) =>
-                  setFormData({ ...formData, circleId: value })
-                }
+                onValueChange={(value) => handleInputChange("circleId", value)}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select circle" />
                 </SelectTrigger>
                 <SelectContent>
-                  {data.circles.map((circle: any) => (
+                  {data.circles.map((circle) => (
                     <SelectItem key={circle.id} value={circle.id}>
                       {circle.name}
                     </SelectItem>
@@ -380,9 +318,8 @@ export default function EditEntityModal({
               <Input
                 id="name"
                 value={formData.name || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
+                onChange={(e) => handleInputChange("name", e.target.value)}
+                required
               />
             </div>
             <div className="space-y-2">
@@ -390,9 +327,7 @@ export default function EditEntityModal({
               <Input
                 id="role"
                 value={formData.role || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, role: e.target.value })
-                }
+                onChange={(e) => handleInputChange("role", e.target.value)}
               />
             </div>
             <div className="space-y-2">
@@ -401,9 +336,7 @@ export default function EditEntityModal({
                 id="email"
                 type="email"
                 value={formData.email || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
+                onChange={(e) => handleInputChange("email", e.target.value)}
               />
             </div>
             <div className="space-y-2">
@@ -412,36 +345,18 @@ export default function EditEntityModal({
                 id="department"
                 value={formData.department || ""}
                 onChange={(e) =>
-                  setFormData({ ...formData, department: e.target.value })
+                  handleInputChange("department", e.target.value)
                 }
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="imageUrl">Profile Picture URL (Optional)</Label>
-              <div className="flex gap-2 items-center">
-                <Input
-                  id="imageUrl"
-                  value={formData.imageUrl || ""}
-                  onChange={handleImageUrlChange}
-                  placeholder="Leave blank for no image"
-                  className="flex-1"
-                />
-                {imagePreview && (
-                  <div className="h-10 w-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
-                    <img
-                      src={imagePreview || "/placeholder.svg"}
-                      alt="Preview"
-                      className="h-full w-full object-cover"
-                      onError={() => setImagePreview(null)}
-                    />
-                  </div>
-                )}
-              </div>
-              <p className="text-xs text-gray-500">
-                Enter a URL to a profile picture or leave blank if no image is
-                needed.
-              </p>
-            </div>
+            <ImageField
+              label="Profile Picture"
+              value={formData.imageUrl || ""}
+              onChange={(value) =>
+                setFormData({ ...formData, imageUrl: value })
+              }
+              aspectRatio={1}
+            />
           </>
         );
     }
@@ -449,20 +364,20 @@ export default function EditEntityModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit {entityType}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {renderForm()}
+          {renderFormFields()}
 
-          <div className="flex justify-end gap-2 pt-4">
+          <DialogFooter>
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
             <Button type="submit">Save Changes</Button>
-          </div>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>

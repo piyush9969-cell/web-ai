@@ -15,7 +15,7 @@ export const initialData = {
       location: "India",
       established: "2020",
       employees: 150,
-      imageUrl: "https://th.bing.com/th/id/OIP.MUVTf7Rn2k0E0W4yO__A6wHaHa?r=0&rs=1&pid=ImgDetMain",
+      imageUrl: "",
     },
   ],
   teams: [
@@ -76,7 +76,7 @@ export const initialData = {
         "Supporting client's complete end-to-end application development and maintenance activities",
       responsibilities: ["Frontend Development", "User Experience Design", "Accessibility Compliance"],
       teamId: "team-1",
-      imageUrl: "https://th.bing.com/th/id/OIP.2S1xLtta6ORdxtlYpiACIgAAAA?rs=1&pid=ImgDetMain",
+      imageUrl: "",
     },
     {
       id: "circle-2",
@@ -85,7 +85,7 @@ export const initialData = {
         "Trusted partner in handling and managing Guidewire business activites",
       responsibilities: ["Guidewire Integration", "API Management", "Data Migration"],
       teamId: "team-2",
-       imageUrl: "https://th.bing.com/th/id/OIP.2S1xLtta6ORdxtlYpiACIgAAAA?rs=1&pid=ImgDetMain",
+       imageUrl: "",
     },
     {
       id: "circle-3",
@@ -94,7 +94,7 @@ export const initialData = {
         "Trusted partner in handling and managing Guidewire business activites",
       responsibilities: ["Guidewire Integration", "API Management", "Data Migration"],
       teamId: "team-3",
-       imageUrl: "https://th.bing.com/th/id/OIP.2S1xLtta6ORdxtlYpiACIgAAAA?rs=1&pid=ImgDetMain",
+       imageUrl: "",
     },
     {
       id: "circle-4",
@@ -103,7 +103,7 @@ export const initialData = {
         "Trusted partner in handling and managing Guidewire business activites",
       responsibilities: ["Guidewire Integration", "API Management", "Data Migration"],
       teamId: "team-4",
-       imageUrl: "https://th.bing.com/th/id/OIP.2S1xLtta6ORdxtlYpiACIgAAAA?rs=1&pid=ImgDetMain",
+       imageUrl: "",
     },
     {
       id: "circle-5",
@@ -111,7 +111,7 @@ export const initialData = {
       purpose: "Backend API development and maintenance",
       responsibilities: ["REST APIs", "GraphQL", "Database Design"],
       teamId: "team-5",
-       imageUrl: "https://th.bing.com/th/id/OIP.2S1xLtta6ORdxtlYpiACIgAAAA?rs=1&pid=ImgDetMain",
+       imageUrl: "",
     },
     {
       id: "circle-6",
@@ -119,7 +119,7 @@ export const initialData = {
       purpose: "Project management and coordination",
       responsibilities: ["Project Planning", "Resource Allocation", "Risk Management"],
       teamId: "team-6",
-       imageUrl: "https://th.bing.com/th/id/OIP.2S1xLtta6ORdxtlYpiACIgAAAA?rs=1&pid=ImgDetMain",
+       imageUrl: "",
     },
   ],
   people: [
@@ -130,7 +130,7 @@ export const initialData = {
       email: "alex.thompson@company.com",
       department: "Design",
       circleId: "circle-1",
-      imageUrl: "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png",
+      imageUrl: "",
     },
     {
       id: "person-2",
@@ -139,7 +139,7 @@ export const initialData = {
       email: "jordan.kim@company.com",
       department: "Engineering",
       circleId: "circle-2",
-      imageUrl: "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png",
+      imageUrl: "",
     },
     {
       id: "person-3",
@@ -148,7 +148,7 @@ export const initialData = {
       email: "sam.wilson@company.com",
       department: "Engineering",
       circleId: "circle-3",
-      imageUrl: "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png",
+      imageUrl: "",
     },
     {
       id: "person-4",
@@ -157,7 +157,7 @@ export const initialData = {
       email: "casey.davis@company.com",
       department: "Design",
       circleId: "circle-1",
-      imageUrl: "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png",
+      imageUrl: "",
     },
   ],
 };

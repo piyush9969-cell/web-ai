@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import { Plus, Users, Building, Target, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import OrganizationChart from "@/components/organization-chart";
+
 import AddEntityModal from "@/components/add-entity-modal";
 import EditEntityModal from "@/components/edit-entity-modal";
-import AdminOrganizationChart from "@/components/admin-organization-chart";
+
 import { initialData } from "@/lib/utils";
+import OrganizationChart from "@/components/organization-chart";
 
 export interface Person {
   id: string;
@@ -95,7 +96,6 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-
       {/* Stats Overview */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -141,7 +141,7 @@ export default function HomePage() {
           </Card>
         </div>
         <Card className="relative overflow-auto w-full">
-          <AdminOrganizationChart data={data} />
+          <OrganizationChart data={data} />
         </Card>
       </div>
 

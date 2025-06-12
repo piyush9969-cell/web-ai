@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { Plus, Users, Building, Target, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import OrganizationChart from "@/components/organization-chart"
+import AOrganizationChart from "@/components/a-organization-chart"
 import AddEntityModal from "@/components/add-entity-modal"
 import EditEntityModal from "@/components/edit-entity-modal"
 import { initialData } from "@/lib/utils"
@@ -16,7 +16,7 @@ export interface Person {
   email: string;
   department: string;
   circleId: string;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 export interface Circle {
@@ -25,7 +25,7 @@ export interface Circle {
   purpose: string;
   responsibilities: string[];
   teamId: string;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 export interface Team {
@@ -35,7 +35,7 @@ export interface Team {
   lead: string;
   focus: string;
   organizationId: string;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 export interface Organization {
@@ -45,23 +45,11 @@ export interface Organization {
   location: string;
   established: string;
   employees: number;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 export type EntityType = "organization" | "team" | "circle" | "person"
 
-const exampleData = [
-  { id: "org1", name: "Org A", type: "organization" },
-  { id: "team1", name: "Team Alpha", type: "team", parentId: "org1" },
-  { id: "team2", name: "Team Second", type: "team", parentId: "org1" },
-  { id: "circle1", name: "Circle X", type: "circle", parentId: "team1" },
-  { id: "circle2", name: "Circle y", type: "circle", parentId: "team2" },
-  { id: "person1", name: "Jane Doe", type: "person", parentId: "circle1" },
-  { id: "person2", name: "John Smith", type: "person", parentId: "circle2" },
-  { id: "person3", name: "Alice Johnson", type: "person", parentId: "circle1" },
-  
-
-];
 
 
 export default function HomePage() {
@@ -111,44 +99,6 @@ const handleEditEntity = (type: EntityType, entityData: any) => {
     };
   });
 };
-
-//   entityId: string,
-//   newParentId: string,
-//   entityType: EntityType
-// ) => {
-//   console.log("yooo")
-//   if (entityType === "person") {
-//     console.log(
-//       `Moving person with ID: ${entityId} to circle with ID: ${newParentId}`
-//     );
-//     setData((prev) => ({
-//       ...prev,
-//       people: prev.people.map((person) =>
-//         person.id === entityId ? { ...person, circleId: newParentId } : person
-//       ),
-//     }));
-//   } else if (entityType === "circle") {
-//     console.log(
-//       `Moving circle with ID: ${entityId} to team with ID: ${newParentId}`
-//     );
-//     setData((prev) => ({
-//       ...prev,
-//       circles: prev.circles.map((circle) =>
-//         circle.id === entityId ? { ...circle, teamId: newParentId } : circle
-//       ),
-//     }));
-//   } else if (entityType === "team") {
-//     console.log(
-//       `Moving team with ID: ${entityId} to organization with ID: ${newParentId}`
-//     );
-//     setData((prev) => ({
-//       ...prev,
-//       teams: prev.teams.map((team) =>
-//         team.id === entityId ? { ...team, organizationId: newParentId } : team
-//       ),
-//     }));
-//   }
-// };
 
   const openEditModal = (type: EntityType, entity: any) => {
     setEditingEntity({ type, entity })
@@ -225,7 +175,7 @@ const handleEditEntity = (type: EntityType, entityData: any) => {
           </Card>
         </div>
         <Card className="relative overflow-auto w-full">
-          <OrganizationChart data={data} onEditEntity={openEditModal} />
+          <AOrganizationChart data={data} onEditEntity={openEditModal} />
         </Card>
       </div>
 
