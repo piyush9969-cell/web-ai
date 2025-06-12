@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import "./globals.css";
+import { usePathname } from "next/navigation";
 
 const navigationItems = [
   { name: "Overview", href: "/" },
@@ -20,6 +21,7 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <html lang="en">
@@ -46,15 +48,21 @@ export default function ClientLayout({
             {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="flex items-center space-x-8">
-                {navigationItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="text-gray-700 hover:text-red-600 text-sm font-medium transition-colors duration-200"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
+                {navigationItems.map((item) => {
+                  const isActive = pathname === item.href;
+                    return (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                         className={`text-sm font-medium transition-colors duration-200 ${
+                          isActive ? "text-red-600 font-semibold" : "text-gray-700 hover:text-red-500"
+                          }`}
+                      >
+                        {item.name}
+                      </Link>
+                    );
+                }
+              )}
                 <Button className="bg-red-600 hover:bg-red-700 text-white">
                   Sign In
                 </Button>

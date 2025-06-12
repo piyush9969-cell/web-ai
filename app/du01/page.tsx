@@ -63,10 +63,6 @@ export default function HomePage() {
     entity: any;
   } | null>(null);
 
-  console.log(data);
-  useEffect(() => {
-    console.log("Updated Data in HomePage:", data);
-  }, [data]);
 
   const handleAddEntity = (type: EntityType, entityData: any) => {
     const id = `${type}-${
