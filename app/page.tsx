@@ -1,8 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Menu, Shield, Home, Building, Heart,Star,Users,Briefcase,Code } from "lucide-react";
-import Link from "next/link";
+import {
+  Shield,
+  Home,
+  Building,
+  Star,
+  Users,
+  Briefcase,
+  Code,
+} from "lucide-react";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
@@ -14,8 +21,7 @@ import {
   CarouselNext,
   CarouselPrevious,
   type CarouselApi,
-} from "@/components/ui/carousel"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+} from "@/components/ui/carousel";
 
 const carouselData = [
   {
@@ -68,8 +74,6 @@ const carouselData = [
     icon: Building,
   },
 ];
-
-
 
 export default function LandingPage() {
   const [api, setApi] = useState<CarouselApi>();
@@ -138,7 +142,7 @@ export default function LandingPage() {
                               <Button
                                 size="lg"
                                 variant="outline"
-                                className="border-gray-300 text-gray-700 hover:bg-gray-50"
+                                className="border-gray-300 text-gray-700 hover:bg-gray-50 bg-transparent"
                               >
                                 Learn More
                               </Button>
@@ -188,36 +192,39 @@ export default function LandingPage() {
         {/* Trust Section */}
         <section className="bg-gray-50 py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6">
-                We believe remarkable things happen when people care
+            <div className="text-center max-w-4xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-10">
+                One of the largest insurance providers & trusted for exceptional
+                services across all Lines of Business
               </h2>
               <p className="text-lg text-gray-600 leading-relaxed mb-12">
-                InsuranceCo takes on the risk and provides the coverage and
-                service you need to help protect the things that are important
-                to you – your home, your car, your valuables and your business.
+                We have a strong partnership spanning more than a decade,
+                providing a variety of solutions and services across product
+                development, large complex integration programs, and customer
+                experience. We leverage advanced industry practices such as
+                Modern Software Development and Engineering, DevOps, Quality
+                Engineering, and Lean Architecture while helping modernize the
+                platform.
               </p>
 
-              {/* Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {/* Key Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-25">
                 <div className="text-center">
-                  <div className="text-3xl font-light text-red-600 mb-2">
-                    170+
-                  </div>
+                  <div className="text-4xl font-light text-red-600 mb-2">7</div>
                   <div className="text-sm text-gray-600">
-                    Years of Experience
+                    Delivery Locations
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-light text-red-600 mb-2">
-                    30K+
+                  <div className="text-4xl font-light text-red-600 mb-2">
+                    1700+
                   </div>
                   <div className="text-sm text-gray-600">
-                    Dedicated Employees
+                    Resources On The Ground
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-light text-red-600 mb-2">
+                  <div className="text-4xl font-light text-red-600 mb-2">
                     15K+
                   </div>
                   <div className="text-sm text-gray-600">
@@ -225,14 +232,239 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-light text-red-600 mb-2">4</div>
-                  <div className="text-sm text-gray-600">Countries Served</div>
+                  <div className="text-4xl font-light text-red-600 mb-2">
+                    170+
+                  </div>
+                  <div className="text-sm text-gray-600">Years of Trust</div>
+                </div>
+              </div>
+
+              {/* Key Objectives */}
+              <div className="mb-25">
+                <h3 className="text-2xl font-light text-gray-900 mb-8">
+                  Key Objectives
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+                  <div className="text-center p-4">
+                    <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-50 rounded-xl mb-3">
+                      <Users className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <div className="text-sm font-medium text-gray-900 mb-1">
+                      Increased
+                    </div>
+                    <div className="text-xs text-gray-600">
+                      Customer Satisfaction & Retention
+                    </div>
+                  </div>
+                  <div className="text-center p-4">
+                    <div className="inline-flex items-center justify-center w-12 h-12 bg-green-50 rounded-xl mb-3">
+                      <Code className="w-6 h-6 text-green-600" />
+                    </div>
+                    <div className="text-sm font-medium text-gray-900 mb-1">
+                      Length and Breadth of
+                    </div>
+                    <div className="text-xs text-gray-600">Co-Innovation</div>
+                  </div>
+                  <div className="text-center p-4">
+                    <div className="inline-flex items-center justify-center w-12 h-12 bg-purple-50 rounded-xl mb-3">
+                      <Star className="w-6 h-6 text-purple-600" />
+                    </div>
+                    <div className="text-sm font-medium text-gray-900 mb-1">
+                      Faster
+                    </div>
+                    <div className="text-xs text-gray-600">Time to Market</div>
+                  </div>
+                  <div className="text-center p-4">
+                    <div className="inline-flex items-center justify-center w-12 h-12 bg-orange-50 rounded-xl mb-3">
+                      <Briefcase className="w-6 h-6 text-orange-600" />
+                    </div>
+                    <div className="text-sm font-medium text-gray-900 mb-1">
+                      Operational
+                    </div>
+                    <div className="text-xs text-gray-600">Excellence</div>
+                  </div>
+                  <div className="text-center p-4">
+                    <div className="inline-flex items-center justify-center w-12 h-12 bg-red-50 rounded-xl mb-3">
+                      <Shield className="w-6 h-6 text-red-600" />
+                    </div>
+                    <div className="text-sm font-medium text-gray-900 mb-1">
+                      Platform
+                    </div>
+                    <div className="text-xs text-gray-600">Modernization</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Services and Business Functions */}
+              <div className="grid md:grid-cols-2 gap-12">
+                {/* Services Supported */}
+                <div>
+                  <h3 className="text-xl font-medium text-gray-900 mb-8">
+                    Services Supported
+                  </h3>
+                  <div className="space-y-3 text-left">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+                      <span className="text-gray-700">
+                        Modern Software Development
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+                      <span className="text-gray-700">
+                        DevOps + SRE + Technology + Release
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+                      <span className="text-gray-700">
+                        Packaged SW Implementation
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+                      <span className="text-gray-700">
+                        Cloud Migration & Modernization
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+                      <span className="text-gray-700">Production Services</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+                      <span className="text-gray-700">
+                        Intelligent Automation
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+                      <span className="text-gray-700">Business Analysis</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Supported Business Functions */}
+                <div>
+                  <h3 className="text-xl font-medium text-gray-900 mb-6">
+                    Supported Business Functions
+                  </h3>
+                  <div className="space-y-3 text-left">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                      <span className="text-gray-700">Personal Insurance</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                      <span className="text-gray-700">Business Insurance</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                      <span className="text-gray-700">Digital Enablement</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                      <span className="text-gray-700">Corp Tech</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                      <span className="text-gray-700">Bond</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                      <span className="text-gray-700">
+                        Infrastructure Cloud Services
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                      <span className="text-gray-700">Claims</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                      <span className="text-gray-700">International</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
+        {/* Strategic Themes Section */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6">
+                Strategic Themes
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Our comprehensive approach integrates key strategic themes to
+                deliver exceptional value and innovation.
+              </p>
+            </div>
 
+
+            {/* Theme Descriptions */}
+            <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              <div className="text-center p-6 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors duration-300">
+              
+                <h4 className="font-semibold text-gray-900 mb-2">
+                  Customer Experience
+                </h4>
+                <p className="text-sm text-gray-600">
+                  Delivering exceptional user experiences across all touchpoints
+                </p>
+              </div>
+              <div className="text-center p-6 rounded-xl bg-green-50 hover:bg-green-100 transition-colors duration-300">
+               
+                <h4 className="font-semibold text-gray-900 mb-2">
+                  Agile Enterprise
+                </h4>
+                <p className="text-sm text-gray-600">
+                  Flexible and responsive organizational capabilities
+                </p>
+              </div>
+              <div className="text-center p-6 rounded-xl bg-teal-50 hover:bg-teal-100 transition-colors duration-300">
+                
+                <h4 className="font-semibold text-gray-900 mb-2">
+                  Lightweight Decoupled Systems
+                </h4>
+                <p className="text-sm text-gray-600">
+                  Modular and scalable architecture solutions
+                </p>
+              </div>
+              <div className="text-center p-6 rounded-xl bg-orange-50 hover:bg-orange-100 transition-colors duration-300">
+               
+                <h4 className="font-semibold text-gray-900 mb-2">
+                  Intelligent Automation
+                </h4>
+                <p className="text-sm text-gray-600">
+                  AI-powered process optimization and efficiency
+                </p>
+              </div>
+              <div className="text-center p-6 rounded-xl bg-indigo-50 hover:bg-indigo-100 transition-colors duration-300">
+               
+                <h4 className="font-semibold text-gray-900 mb-2">
+                  Intelligent Cloud Infrastructure
+                </h4>
+                <p className="text-sm text-gray-600">
+                  Smart cloud solutions for modern enterprises
+                </p>
+              </div>
+              <div className="text-center p-6 rounded-xl bg-red-50 hover:bg-red-100 transition-colors duration-300">
+               
+                <h4 className="font-semibold text-gray-900 mb-2">
+                  Data and Analytics
+                </h4>
+                <p className="text-sm text-gray-600">
+                  Insights-driven decision making and intelligence
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+        </section>
         {/* Coverage Section */}
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
