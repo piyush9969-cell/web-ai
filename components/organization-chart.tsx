@@ -9,6 +9,7 @@ import type {
   Person,
   EntityType,
 } from "@/app/admin/organisations/page";
+import { useRouter } from "next/navigation";
 
 interface OrganizationChartProps {
   data: {
@@ -40,7 +41,7 @@ export default function OrganizationChart({
   const DEFAULT_PEOPLE_IMAGE_URL =
     "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png";
 
-
+ const router = useRouter();
   useEffect(() => {
     initializeMermaid();
   }, []);
@@ -300,6 +301,11 @@ export default function OrganizationChart({
 
   const setupNodeEventListeners = (nodeElement: SVGElement) => {
 
+        nodeElement.addEventListener("click", (e) => {
+          if (!isDragging.current) {
+            handleNodeClick(e, nodeElement);
+          }
+        });
     // Hover effects
     nodeElement.addEventListener("mouseenter", () => {
       if (!isDragging.current) {
@@ -315,7 +321,7 @@ export default function OrganizationChart({
 
     // Ensure clickability
     nodeElement.style.pointerEvents = "all";
-    nodeElement.style.cursor = "default";
+    nodeElement.style.cursor = "pointer";
   };
 
 //     e.preventDefault();
@@ -379,6 +385,70 @@ export default function OrganizationChart({
 //       data: entity,
 //     };
 //   };
+
+  const handleNodeClick = (e: MouseEvent, nodeElement: SVGElement) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Visual feedback
+    nodeElement.style.filter = "brightness(1.2)";
+
+    setTimeout(() => {
+      nodeElement.style.filter = "";
+      handleNodeEdit(nodeElement);
+    }, 150);
+  };
+
+  const handleNodeEdit = (nodeElement: SVGElement) => {
+    const entity = findEntityFromNode(nodeElement);
+
+    if (entity.found) {
+      const entityId = entity.data.id
+        router.push(`/${entityId}`);
+    } else {
+      console.error("Could not find entity for node ID:", nodeElement.id);
+    }
+  };
+
+  const findEntityFromNode = (nodeElement: SVGElement) => {
+    const nodeId = extractNodeId(nodeElement.id);
+
+    const searchFunctions = [
+      () => findInCollection(data.organizations, nodeId, "organization"),
+      () => findInCollection(data.teams, nodeId, "team"),
+      () => findInCollection(data.circles, nodeId, "circle"),
+      () => findInCollection(data.people, nodeId, "person"),
+    ];
+
+    for (const searchFn of searchFunctions) {
+      const result = searchFn();
+      if (result.found) return result;
+    }
+
+    return { found: false, type: "person" as EntityType, data: null };
+  };
+
+  const extractNodeId = (fullNodeId: string) => {
+    return fullNodeId.includes("flowchart-")
+      ? fullNodeId.replace(/^.*?flowchart-/, "").replace(/-\d+$/, "")
+      : fullNodeId;
+  };
+
+  const findInCollection = (
+    collection: any[],
+    nodeId: string,
+    type: EntityType
+  ) => {
+    const entity = collection.find(
+      (item) => nodeId.includes(item.id) || item.id.includes(nodeId)
+    );
+
+    return {
+      found: !!entity,
+      type,
+      data: entity,
+    };
+  };
 
   return (
     <div className="w-full h-full bg-white relative">

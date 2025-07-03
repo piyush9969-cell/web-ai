@@ -20,7 +20,7 @@ export const initialData = {
   ],
   teams: [
     {
-      id: "team-1",
+      id: "du01",
       name: "US-FS-INS-TRVLR-01",
       description: "Frontend development and user experience",
       lead: "",
@@ -28,7 +28,7 @@ export const initialData = {
       organizationId: "org-1",
     },
     {
-      id: "team-2",
+      id: "team-2", 
       name: "US-FS-INS-TRVLR-02",
       description: "Backend infrastructure and APIs",
       lead: "",
@@ -75,7 +75,7 @@ export const initialData = {
       purpose:
         "Supporting client's complete end-to-end application development and maintenance activities",
       responsibilities: ["Frontend Development", "User Experience Design", "Accessibility Compliance"],
-      teamId: "team-1",
+      teamId: "du01",
       imageUrl: "",
     },
     {

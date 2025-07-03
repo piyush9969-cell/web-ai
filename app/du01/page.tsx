@@ -67,7 +67,7 @@ export default function ModernEngineeringPage() {
                   size="lg"
                   className="bg-red-600 hover:bg-red-700 text-white px-8"
                 >
-                  Learn More
+                  Explore Team
                 </Button>
                 {/* <Button
                   size="lg"
@@ -346,7 +346,7 @@ export default function ModernEngineeringPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6">
-              Modern Software Engineering Spread
+              Modern Software Engineering Spread Headcount
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Distribution across different lines of business and engineering
