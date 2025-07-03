@@ -12,7 +12,7 @@ import { usePathname } from "next/navigation";
 
 const navigationItems = [
   { name: "Overview", href: "/" },
-  { name: "DU's in Insurance", href: "/du01" },
+  { name: "DU's in Insurance", href: "/du" },
 ];
 
 export default function ClientLayout({
