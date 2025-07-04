@@ -82,7 +82,7 @@ export default function ModernEngineeringPage() {
             <div className="relative">
               <div className="aspect-[4/3] rounded-3xl overflow-hidden bg-gray-100">
                 <Image
-                  src="https://images.unsplash.com/photo-1639152201720-5e536d254d81?q=80&w=2232&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src="https://images.unsplash.com/photo-1632910121591-29e2484c0259?q=80&w=2231&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Modern Engineering Infographic"
                   fill
                   className="object-cover"
