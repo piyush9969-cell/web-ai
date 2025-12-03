@@ -58,7 +58,7 @@ export default function AddEntityModal({
     onClose();
   };
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field: string, value: string | string[]) => {
     setFormData((prev: any) => ({ ...prev, [field]: value }));
   };
 
