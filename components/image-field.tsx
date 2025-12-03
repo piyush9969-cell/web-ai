@@ -21,7 +21,8 @@ export default function ImageField({
   value,
   onChange,
   aspectRatio = 1,
-  placeholder = "Enter image URL or upload an image",
+  // placeholder = "Enter image URL or upload an image",
+  placeholder = "Enter image URL",
 }: ImageFieldProps) {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
@@ -69,14 +70,15 @@ export default function ImageField({
           onChange={(e) => onChange(e.target.value)}
           className="flex-1"
         />
-        <Button
+        {/* ENABLE THIS WHEN UPLOAD FUNCTIONALITY IS REQUIRED */}
+        {/* <Button
           type="button"
           variant="outline"
           onClick={() => setIsUploadModalOpen(true)}
         >
           <Upload className="h-4 w-4 mr-2" />
           Upload
-        </Button>
+        </Button> */}
       </div>
 
       <ImageUploadCrop
