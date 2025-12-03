@@ -64,6 +64,24 @@ export default function HomePage() {
   } | null>(null);
 
 
+  const handleEditEntity = (type: EntityType, entityData: any) => {
+    // console.log("Editing Entity:", type, entityData); // Debugging
+    // setData((prev) => {
+     
+    //   const pluralType =
+    //     type === "person" ? "people" : (`${type}s` as keyof typeof prev);
+    //   const currentArray = (prev[pluralType] as any[]) || [];
+  
+    //   return {
+    //     ...prev,
+    //     [pluralType]: currentArray.map((item) =>
+    //       item.id === entityData.id ? entityData : item
+    //     ),
+    //   };
+    // });
+    return
+  };
+
   const handleAddEntity = (type: EntityType, entityData: any) => {
     const id = `${type}-${
       type === "person"
@@ -86,8 +104,8 @@ export default function HomePage() {
 
 
   const openEditModal = (type: EntityType, entity: any) => {
-    setEditingEntity({ type, entity });
-    setIsEditModalOpen(true);
+    // setEditingEntity({ type, entity });
+    // setIsEditModalOpen(true);
   };
 
   return (
@@ -137,7 +155,7 @@ export default function HomePage() {
           </Card>
         </div>
         <Card className="relative overflow-auto w-full">
-          <OrganizationChart data={data} />
+          <OrganizationChart onEditEntity={openEditModal} data={data} />
         </Card>
       </div>
 
